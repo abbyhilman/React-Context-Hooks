@@ -1,10 +1,14 @@
 import React, { useContext, useState } from "react";
 import { BookContext } from "../contexts/BookContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const NewBookForm = () => {
   const { dispatch } = useContext(BookContext);
+  const { isLigthTheme, light, dark } = useContext(ThemeContext);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const theme = isLigthTheme ? light : dark;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: "ADD_BOOK", book: { title, author } });
@@ -19,6 +23,7 @@ const NewBookForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
+        style={{ background: theme.form }}
       />
       <input
         type="text"
@@ -26,6 +31,7 @@ const NewBookForm = () => {
         value={author}
         onChange={(e) => setAuthor(e.target.value)}
         required
+        style={{ background: theme.form }}
       />
       <input type="submit" value="add book" />
     </form>
